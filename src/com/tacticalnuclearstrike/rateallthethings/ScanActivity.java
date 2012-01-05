@@ -6,10 +6,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -22,6 +26,8 @@ import roboguice.inject.InjectView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 /**
  * User: Fredrik / 2011-12-19
@@ -29,7 +35,8 @@ import java.io.InputStream;
 public class ScanActivity extends RoboActivity {
 
     final String TAG = "RateAllTheThings";
-    final String URL = "";
+    final String URL = "http://rateallthethings.com";
+
     @InjectView(R.id.btnScan)
     Button btnScan;
 
@@ -58,20 +65,37 @@ public class ScanActivity extends RoboActivity {
         if (scanResult != null) {
             // handle scan result
             Log.d(TAG, scanResult.toString());
-            SendJson(scanResult.getFormatName(), scanResult.getContents());
+            BarCode code = this.lookUpBarCode(scanResult.getFormatName(), scanResult.getContents());
+            // launch details activity
+            if(code != null){
+                // activity
+                Intent i = new Intent(this, DetailsActivity.class);
+                i.putExtra("barcode",code);
+                this.startActivity(i);
+            }
+            else
+            {
+                Toast.makeText(this, "Server problems", Toast.LENGTH_LONG).show();
+            }
         } else {
-
+            Toast.makeText(this, "No barcode found", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void SendJson(String Format, String Code) {
-        JSONObject object = new JSONObject();
+    private BarCode lookUpBarCode(String format, String code) {
+        HttpClient client = new DefaultHttpClient();
         try {
-            object.put("format", Format);
-            object.put("code", Code);
+            HttpResponse response = client.execute(new HttpGet(URL + "/Details?format=" + format + "&code=" + code));
+            InputStream content = response.getEntity().getContent();
+            Reader reader = new InputStreamReader(content);
+
+            return new Gson().fromJson(reader, BarCode.class);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        SendJson(object);
+        return null;
     }
 
 
