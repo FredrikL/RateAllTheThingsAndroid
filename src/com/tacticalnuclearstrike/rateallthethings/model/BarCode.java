@@ -6,6 +6,6 @@ import java.io.Serializable;
  * User: Fredrik / 2012-01-05
  */
 public class BarCode implements Serializable{
-    public String format;
-    public String code;
+    public String Format;
+    public String Code;
 }

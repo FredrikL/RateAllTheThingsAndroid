@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -42,7 +41,6 @@ public class ScanActivity extends RoboActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.scan_activity);
         this.SetupButtons();
     }
@@ -70,7 +68,7 @@ public class ScanActivity extends RoboActivity {
             if(code != null){
                 // activity
                 Intent i = new Intent(this, DetailsActivity.class);
-                i.putExtra("barcode",code);
+                i.putExtra("BARCODE",code);
                 this.startActivity(i);
             }
             else
@@ -85,7 +83,7 @@ public class ScanActivity extends RoboActivity {
     private BarCode lookUpBarCode(String format, String code) {
         HttpClient client = new DefaultHttpClient();
         try {
-            HttpResponse response = client.execute(new HttpGet(URL + "/Details?format=" + format + "&code=" + code));
+            HttpResponse response = client.execute(new HttpGet(URL + "/BarCode/Details?format=" + format + "&code=" + code));
             InputStream content = response.getEntity().getContent();
             Reader reader = new InputStreamReader(content);
 
