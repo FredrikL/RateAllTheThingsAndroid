@@ -45,7 +45,8 @@ public class AccountActivity extends RoboActivity {
     }
 
     private void startCreateUser(){
-        new CreateUserTask(this, service).execute(email.getText().toString());
+        String email = this.email.getText().toString();
+        new CreateUserTask(this, service).execute(email);
     }
 
     public void savePassword(String password) {

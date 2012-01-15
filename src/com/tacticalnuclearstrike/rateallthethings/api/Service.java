@@ -69,8 +69,8 @@ public class Service implements IService{
 
             Reader reader = executeRequestAndReturnAsReader(post);
 
-            Type type = new TypeToken<ArrayList<FooBazBar>>(){}.getType();
-            List<FooBazBar> items = new Gson().fromJson(reader, type);
+            Type type = new TypeToken<ArrayList<CreateUserResponse>>(){}.getType();
+            List<CreateUserResponse> items = new Gson().fromJson(reader, type);
             if(items.size() == 1)
             {
                 password=  items.get(0).password;
@@ -82,7 +82,7 @@ public class Service implements IService{
         return password;
     }
     
-    private class FooBazBar {
+    private class CreateUserResponse {
         public String password;
     }
 }
