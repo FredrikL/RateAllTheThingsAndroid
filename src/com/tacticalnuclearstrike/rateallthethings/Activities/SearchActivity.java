@@ -1,4 +1,4 @@
-package com.tacticalnuclearstrike.rateallthethings;
+package com.tacticalnuclearstrike.rateallthethings.Activities;
 
 import android.os.Bundle;
 import roboguice.activity.RoboActivity;

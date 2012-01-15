@@ -9,7 +9,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DetailsActivity"/>
+        <activity android:name=".Activities.DetailsActivity"/>
+        <activity android:name=".Activities.AccountActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

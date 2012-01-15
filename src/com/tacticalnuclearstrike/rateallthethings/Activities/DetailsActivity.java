@@ -1,9 +1,10 @@
-package com.tacticalnuclearstrike.rateallthethings;
+package com.tacticalnuclearstrike.rateallthethings.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.tacticalnuclearstrike.rateallthethings.R;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;

@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.inject.Inject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.tacticalnuclearstrike.rateallthethings.Activities.AccountActivity;
+import com.tacticalnuclearstrike.rateallthethings.Activities.DetailsActivity;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
@@ -24,9 +27,6 @@ import roboguice.inject.InjectView;
 public class StartActivity extends RoboActivity {
     @InjectView(R.id.btnScan)
     Button btnScan;
-    
-    @InjectView(R.id.btnCreateUsers)
-    Button btnCreateUsers;
 
     @Inject
     IService service;
@@ -47,16 +47,26 @@ public class StartActivity extends RoboActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_account:
+                Intent i = new Intent(this, AccountActivity.class);
+                this.startActivity(i);
+
+                return true;
+            case R.id.menu_search:
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void SetupButtons() {
         btnScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 StartScan();
-            }
-        });
-        
-        btnCreateUsers.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-               new CreateUserTask().execute("lol@lol.se");
             }
         });
     }
@@ -97,20 +107,6 @@ public class StartActivity extends RoboActivity {
         @Override
         protected void onPostExecute(BarCode result) {
             getBarCodeDetails(result);
-        }
-    }
-
-    private class CreateUserTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            return service.createUser(strings[0]);
-        }
-        
-        @Override
-        protected void onPostExecute(String password){
-            if(password != null)
-                settings.setPassword(password);
         }
     }
 }
