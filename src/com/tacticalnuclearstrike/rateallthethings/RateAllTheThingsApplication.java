@@ -3,7 +3,9 @@ package com.tacticalnuclearstrike.rateallthethings;
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
+import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.api.Service;
+import com.tacticalnuclearstrike.rateallthethings.api.Settings;
 import roboguice.application.RoboApplication;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class RateAllTheThingsApplication extends RoboApplication {
         @Override
         protected void configure() {
             bind(IService.class).to(Service.class);
+            bind(ISettings.class).to(Settings.class);
         }
     }
 }

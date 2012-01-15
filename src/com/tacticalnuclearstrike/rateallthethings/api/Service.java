@@ -1,7 +1,5 @@
 package com.tacticalnuclearstrike.rateallthethings.api;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.Log;
 import com.google.gson.Gson;
@@ -24,33 +22,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Service implements IService{
-    
-    final String TAG = "RateAllTheThings";
     final String URL = "http://rateallthethings.com";
-
-    private Context context;
+    private ISettings settings;
 
     @Inject
-    public Service(Context context){
-        this.context = context;
-    }
-
-    private String getUserName(){
-        return  getSharedPreferences().getString("USERNAME", "");
-    }
-    
-    private String getPassword() {
-        return this.getSharedPreferences().getString("PASSWORD", "");
-    }
-
-    private SharedPreferences getSharedPreferences() {
-        return this.context.getSharedPreferences(TAG, 0);
+    public Service(ISettings settings){
+        this.settings = settings;
     }
 
     private HttpGet getHttpGetWithBasicAuth(String url){
         HttpGet httpGet = new HttpGet(url);
 
-        String s = this.getUserName() + ":" + this.getPassword();
+        String s = this.settings.getEmail() + ":" + this.settings.getPassword();
         httpGet.addHeader("Authorization", "Basic " + Base64.encodeToString(s.getBytes(), Base64.NO_WRAP));
         return httpGet;
     }
@@ -66,7 +49,7 @@ public class Service implements IService{
             List<BarCode> items = new Gson().fromJson(reader, barCodeArrayType);
             return items.get(0);
         } catch (IOException ioe) {
-            Log.e(TAG, ioe.getMessage(), ioe);
+            Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
         }
         return null;
     }
@@ -94,7 +77,7 @@ public class Service implements IService{
             }
 
         } catch (Exception ioe) {
-            Log.e(TAG, ioe.getMessage(), ioe);
+            Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
         }
         return password;
     }

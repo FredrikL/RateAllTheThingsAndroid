@@ -1,6 +1,5 @@
 package com.tacticalnuclearstrike.rateallthethings;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import com.google.inject.Inject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
+import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
@@ -22,9 +22,6 @@ import roboguice.inject.InjectView;
  * User: Fredrik / 2011-12-19
  */
 public class StartActivity extends RoboActivity {
-
-    final String TAG = "RateAllTheThings";
-
     @InjectView(R.id.btnScan)
     Button btnScan;
     
@@ -33,8 +30,9 @@ public class StartActivity extends RoboActivity {
 
     @Inject
     IService service;
-
-    private ProgressDialog pd;
+    
+    @Inject
+    ISettings settings;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +69,7 @@ public class StartActivity extends RoboActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
-            Log.d(TAG, scanResult.toString());
+            Log.d(this.settings.getTag(), scanResult.toString());
             new GetBarCodeDetailsTask().execute(scanResult.getFormatName(), scanResult.getContents());
         } else {
             Toast.makeText(this, "No barcode found", Toast.LENGTH_LONG).show();
@@ -111,7 +109,8 @@ public class StartActivity extends RoboActivity {
         
         @Override
         protected void onPostExecute(String password){
-
+            if(password != null)
+                settings.setPassword(password);
         }
     }
 }

@@ -9,3 +9,4 @@ public interface IService {
     BarCode lookUpBarCode(String format, String code);
     String createUser(String email);
 }
+
