@@ -11,6 +11,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
@@ -30,12 +31,21 @@ public class Service implements IService{
         this.settings = settings;
     }
 
+    private void addAuthHeader(HttpRequestBase request) {
+        String s = this.settings.getEmail() + ":" + this.settings.getPassword();
+        request.addHeader("Authorization", "Basic " + Base64.encodeToString(s.getBytes(), Base64.NO_WRAP));
+    }
+
     private HttpGet getHttpGetWithBasicAuth(String url){
         HttpGet httpGet = new HttpGet(url);
-
-        String s = this.settings.getEmail() + ":" + this.settings.getPassword();
-        httpGet.addHeader("Authorization", "Basic " + Base64.encodeToString(s.getBytes(), Base64.NO_WRAP));
+        addAuthHeader(httpGet);
         return httpGet;
+    }
+    
+    private HttpPost getHttpPostWithBasicAuth(String url) {
+        HttpPost httpPost = new HttpPost(url);
+        addAuthHeader(httpPost);
+        return httpPost;
     }
     
     public BarCode lookUpBarCode(String format, String code) {
@@ -57,6 +67,7 @@ public class Service implements IService{
     private Reader executeRequestAndReturnAsReader(HttpRequestBase httpGet) throws IOException {
         HttpClient client = new DefaultHttpClient();
         HttpResponse response = client.execute(httpGet);
+        Log.d(this.settings.getTag(), "Response is " + response.getStatusLine().getStatusCode());
         InputStream content = response.getEntity().getContent();
         return new InputStreamReader(content);
     }
@@ -81,7 +92,29 @@ public class Service implements IService{
         }
         return password;
     }
-    
+
+    public Boolean updateBarCode(BarCode barCode) {
+        try{
+            String url = URL + "/BarCode/" ;
+            HttpPost post = this.getHttpPostWithBasicAuth(url);
+
+            String content = new Gson().toJson(barCode);
+
+            post.setEntity(new StringEntity(content, "UTF8"));
+            post.setHeader("Content-type", "application/json");
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse resp = client.execute(post);
+
+            Log.d(this.settings.getTag(), "Response is " + resp.getStatusLine().getStatusCode());
+
+        } catch (Exception ioe) {
+            Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
+            return false;
+        }
+
+        return true;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     private class CreateUserResponse {
         public String password;
     }

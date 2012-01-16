@@ -50,9 +50,10 @@ public class AccountActivity extends RoboActivity {
     }
 
     public void savePassword(String password) {
-        if(password != null)
+        if(password != null)      {
+            settings.setEmail(this.email.getText().toString());
             settings.setPassword(password);
-        else {
+        }else {
             // error management
         }
         this.finish();

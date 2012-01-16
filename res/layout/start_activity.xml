@@ -9,5 +9,4 @@
             android:text="Scan"
             android:id="@+id/btnScan"/>
 
-
 </LinearLayout>

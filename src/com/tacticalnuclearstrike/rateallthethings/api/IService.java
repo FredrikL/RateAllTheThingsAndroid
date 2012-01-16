@@ -8,5 +8,6 @@ import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 public interface IService {
     BarCode lookUpBarCode(String format, String code);
     String createUser(String email);
+    Boolean updateBarCode(BarCode barCode);
 }
 
