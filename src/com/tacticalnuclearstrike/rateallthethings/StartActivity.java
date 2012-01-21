@@ -27,8 +27,6 @@ import roboguice.inject.InjectView;
 public class StartActivity extends RoboActivity {
     @InjectView(R.id.btnScan)
     Button btnScan;
-    @InjectView(R.id.btnDetails)
-    Button btnDetails;
 
     @Inject
     IService service;
@@ -71,22 +69,6 @@ public class StartActivity extends RoboActivity {
                 StartScan();
             }
         });
-        
-        btnDetails.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view){
-                displayDetails();
-            }
-        });
-    }
-
-    private void displayDetails() {
-        BarCode barcode =new BarCode();
-        barcode.Format="EAN_13";
-        barcode.Code="123";
-        barcode.Id = 66;
-        Intent i = new Intent(this, DetailsActivity.class);
-        i.putExtra("BARCODE",barcode);
-        this.startActivity(i);
     }
 
     private void StartScan() {
