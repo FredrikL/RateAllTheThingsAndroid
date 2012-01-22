@@ -1,4 +1,4 @@
-package com.tacticalnuclearstrike.rateallthethings.Activities;
+package com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces;
 
 /**
  * User: Fredrik / 2012-01-05

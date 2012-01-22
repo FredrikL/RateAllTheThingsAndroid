@@ -11,6 +11,7 @@
         </activity>
         <activity android:name=".Activities.DetailsActivity"/>
         <activity android:name=".Activities.AccountActivity"/>
+        <activity android:name=".Activities.DisplayCommentsActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

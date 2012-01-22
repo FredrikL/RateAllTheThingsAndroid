@@ -24,4 +24,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update_barcode"/>
+    
+    <TextView android:text="@string/comment"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+    <EditText android:id="@+id/commentText"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="text"/>
+
+    <Button android:id="@+id/btnPostComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/post_comment"/>
+
+
+    <Button android:id="@+id/btnDisplayComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/display_comment"/>
 </LinearLayout>
