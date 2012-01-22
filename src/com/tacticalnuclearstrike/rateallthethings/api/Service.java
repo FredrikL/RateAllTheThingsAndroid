@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
+import com.tacticalnuclearstrike.rateallthethings.model.Comment;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -112,7 +113,44 @@ public class Service implements IService{
             return false;
         }
 
-        return true;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;
+    }
+
+    public Boolean addComment(Comment comment) {
+        try{
+            String url = URL + "/Comment/" + comment.BarCodeId;
+            HttpPost post = this.getHttpPostWithBasicAuth(url);
+
+            String content = new Gson().toJson(comment);
+
+            post.setEntity(new StringEntity(content, "UTF8"));
+            post.setHeader("Content-type", "application/json");
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse resp = client.execute(post);
+
+            Log.d(this.settings.getTag(), "Response is " + resp.getStatusLine().getStatusCode());
+        } catch (Exception e) {
+            Log.e(this.settings.getTag(), e.getMessage(), e);
+            return false;
+        }
+        return true;
+    }
+
+    public List<Comment> getCommentsForBarCode(long barCodeId) {
+        List<Comment> retVal;
+        try{
+            String url = URL + "/Comment/" + barCodeId;
+            HttpGet httpGet = this.getHttpGetWithBasicAuth(url);
+
+            Reader reader = executeRequestAndReturnAsReader(httpGet);
+
+            Type type = new TypeToken<ArrayList<Comment>>(){}.getType();
+            retVal = new Gson().fromJson(reader, type);
+        } catch(Exception e) {
+            Log.e(this.settings.getTag(), e.getMessage(), e);
+            return new ArrayList<Comment>();
+        }
+        return retVal;
     }
 
     private class CreateUserResponse {

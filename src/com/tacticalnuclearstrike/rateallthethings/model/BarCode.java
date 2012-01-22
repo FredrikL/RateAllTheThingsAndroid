@@ -13,3 +13,4 @@ public class BarCode implements Serializable{
 
     public String Name;
 }
+
