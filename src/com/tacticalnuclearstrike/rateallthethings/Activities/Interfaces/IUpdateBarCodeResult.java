@@ -7,3 +7,4 @@ package com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces;
 public interface IUpdateBarCodeResult {
     void success(Boolean result);
 }
+

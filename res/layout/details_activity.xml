@@ -12,6 +12,17 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
             android:id="@+id/tvCode"/>
+
+    <TextView android:text="@string/rating"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+            android:id="@+id/tvRating"/>
+
+    <Button android:id="@+id/btnRateBarCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rate_barcode"/>
+
     <TextView android:text="@string/name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"/>
@@ -19,7 +30,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:inputType="text"/>
-    
+
     <Button android:id="@+id/btnUpdateBarcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

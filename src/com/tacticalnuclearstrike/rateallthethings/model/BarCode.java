@@ -11,6 +11,9 @@ public class BarCode implements Serializable{
     public String Format;
     public String Code;
 
+    public float Rating;
+    public boolean HasRated;
+
     public String Name;
 }
 

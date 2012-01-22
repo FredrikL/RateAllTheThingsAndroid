@@ -153,6 +153,28 @@ public class Service implements IService{
         return retVal;
     }
 
+    public BarCode rateBarCode(long barCodeId, int rating) {
+        try{
+            String url = URL + "/BarCode/Rate/" + barCodeId + "/" + rating;
+            Log.d(this.settings.getTag(), url);
+            HttpPost post = this.getHttpPostWithBasicAuth(url);
+
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse resp = client.execute(post);
+
+            Log.d(this.settings.getTag(), "Response is " + resp.getStatusLine().getStatusCode());
+
+            Type barCodeArrayType = new TypeToken<ArrayList<BarCode>>(){}.getType();
+            InputStream content = resp.getEntity().getContent();
+            InputStreamReader reader= new InputStreamReader(content);
+            List<BarCode> items = new Gson().fromJson(reader, barCodeArrayType);
+            return items.get(0);
+        } catch (Exception e) {
+            Log.e(this.settings.getTag(), e.getMessage(), e);
+            return null;
+        }
+    }
+
     private class CreateUserResponse {
         public String password;
     }

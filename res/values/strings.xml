@@ -9,4 +9,6 @@
     <string name="comment">Comment</string>
     <string name="post_comment">Post comment</string>
     <string name="display_comment">Display comments</string>
+    <string name="rating">Rating</string>
+    <string name="rate_barcode">Rate Barcode</string>
 </resources>

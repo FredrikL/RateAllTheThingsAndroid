@@ -15,5 +15,7 @@ public interface IService {
     
     Boolean addComment(Comment comment);
     List<Comment> getCommentsForBarCode(long barCodeId);
+
+    BarCode rateBarCode(long barCodeId, int rating);
 }
 
