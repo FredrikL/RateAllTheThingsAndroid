@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,8 @@ public class Service implements IService{
     public String createUser(String email) {
         String password = null;
         try{
-            String url = URL + "/User/?email=" + email;
+            String url = URL + "/User/?email=" + URLEncoder.encode(email, "utf-8");
+            Log.d(this.settings.getTag(), "Url is: " + url);
             HttpPost post = new HttpPost(url);
 
             Reader reader = executeRequestAndReturnAsReader(post);
