@@ -11,7 +11,7 @@ import java.util.List;
 public interface IService {
     BarCode lookUpBarCode(String format, String code);
     String createUser(String email);
-    Boolean updateBarCode(BarCode barCode);
+    BarCode updateBarCode(BarCode barCode);
     
     Boolean addComment(Comment comment);
     List<Comment> getCommentsForBarCode(long barCodeId);

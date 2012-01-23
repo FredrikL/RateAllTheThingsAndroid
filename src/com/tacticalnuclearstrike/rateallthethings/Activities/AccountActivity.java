@@ -1,5 +1,6 @@
 package com.tacticalnuclearstrike.rateallthethings.Activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,8 @@ public class AccountActivity extends RoboActivity {
     @Inject
     ISettings settings;
 
+    ProgressDialog pd;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +49,13 @@ public class AccountActivity extends RoboActivity {
 
     private void startCreateUser(){
         String email = this.email.getText().toString();
+        this.pd = ProgressDialog.show(this, "", "Creating Account...");
+
         new CreateUserTask(this, service).execute(email);
     }
 
     public void savePassword(String password) {
+        this.pd.dismiss();
         if(password != null)      {
             settings.setEmail(this.email.getText().toString());
             settings.setPassword(password);

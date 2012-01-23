@@ -94,7 +94,7 @@ public class Service implements IService{
         return password;
     }
 
-    public Boolean updateBarCode(BarCode barCode) {
+    public BarCode updateBarCode(BarCode barCode) {
         try{
             String url = URL + "/BarCode/" ;
             HttpPost post = this.getHttpPostWithBasicAuth(url);
@@ -107,13 +107,16 @@ public class Service implements IService{
             HttpResponse resp = client.execute(post);
 
             Log.d(this.settings.getTag(), "Response is " + resp.getStatusLine().getStatusCode());
+            Type barCodeArrayType = new TypeToken<ArrayList<BarCode>>(){}.getType();
+            InputStream responseContent = resp.getEntity().getContent();
+            InputStreamReader reader= new InputStreamReader(responseContent);
+            List<BarCode> items = new Gson().fromJson(reader, barCodeArrayType);
+            return items.get(0);
 
         } catch (Exception ioe) {
             Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
-            return false;
+            return null;
         }
-
-        return true;
     }
 
     public Boolean addComment(Comment comment) {

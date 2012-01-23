@@ -1,5 +1,6 @@
 package com.tacticalnuclearstrike.rateallthethings.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,12 +25,15 @@ public class DisplayCommentsActivity extends RoboListActivity implements IGetCom
     
     @Inject
     IService service;
+
+    ProgressDialog pd;
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         long barCodeId =getIntent().getLongExtra("BarCodeId", -1);
         if(barCodeId > 0) {
+            this.pd = ProgressDialog.show(this, "", "Downloading comments...");
             new GetCommentsForBarCodeTask(this.service, this).execute(barCodeId);
         }
     }
@@ -37,6 +41,7 @@ public class DisplayCommentsActivity extends RoboListActivity implements IGetCom
     public void ReturnedComments(List<Comment> comments) {
         ArrayAdapter<Comment> adapter = new Adapter(this, comments);
         setListAdapter(adapter);
+        this.pd.dismiss();
     }
     class Adapter extends ArrayAdapter<Comment>{
 

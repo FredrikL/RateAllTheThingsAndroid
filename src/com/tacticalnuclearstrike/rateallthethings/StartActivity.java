@@ -1,5 +1,6 @@
 package com.tacticalnuclearstrike.rateallthethings;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ public class StartActivity extends RoboActivity {
     
     @Inject
     ISettings settings;
+
+    ProgressDialog pd;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +83,7 @@ public class StartActivity extends RoboActivity {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             Log.d(this.settings.getTag(), scanResult.toString());
+            this.pd = ProgressDialog.show(this, "", "Downloading details...");
             new GetBarCodeDetailsTask().execute(scanResult.getFormatName(), scanResult.getContents());
         } else {
             Toast.makeText(this, "No barcode found", Toast.LENGTH_LONG).show();
@@ -87,6 +91,7 @@ public class StartActivity extends RoboActivity {
     }
     
     private void getBarCodeDetails(BarCode barcode) {
+        this.pd.dismiss();
         if(barcode != null){
             Intent i = new Intent(this, DetailsActivity.class);
             i.putExtra("BARCODE",barcode);

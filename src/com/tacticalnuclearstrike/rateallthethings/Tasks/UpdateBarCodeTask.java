@@ -5,7 +5,7 @@ import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IUpdateB
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 
-public class UpdateBarCodeTask extends AsyncTask<BarCode, Void, Boolean> {
+public class UpdateBarCodeTask extends AsyncTask<BarCode, Void, BarCode> {
 
     private IService service;
     private IUpdateBarCodeResult updateBarCodeResult;
@@ -17,12 +17,12 @@ public class UpdateBarCodeTask extends AsyncTask<BarCode, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(BarCode... barCodes) {
+    protected BarCode doInBackground(BarCode... barCodes) {
         return this.service.updateBarCode(barCodes[0]);
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(BarCode result) {
         this.updateBarCodeResult.success(result);
     }
 }

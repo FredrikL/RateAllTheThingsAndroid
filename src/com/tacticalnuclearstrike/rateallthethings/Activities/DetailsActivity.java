@@ -1,6 +1,7 @@
 package com.tacticalnuclearstrike.rateallthethings.Activities;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class DetailsActivity extends RoboActivity
     private BarCode currentBarCode;
     
     private AlertDialog ratingDialog;
+    private ProgressDialog pd;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,7 @@ public class DetailsActivity extends RoboActivity
     public void postRating(String value){
         this.ratingDialog.dismiss();
         int rating = Integer.parseInt(value);
+        this.pd = ProgressDialog.show(this, "", "Sending your rating...");
         new RateBarCodeTask(this.service, this, this.currentBarCode.Id).execute(rating);
     }
     
@@ -126,13 +129,14 @@ public class DetailsActivity extends RoboActivity
 
     private void callUpdateBarCode() {
         currentBarCode.Name = barcodeName.getText().toString();
-
+        this.pd = ProgressDialog.show(this,"", "Updating BarCode...");
         new UpdateBarCodeTask(this.service, this).execute(currentBarCode);
     }
 
-    public void success(Boolean result) {
-        if(result)
-            this.finish();
+    public void success(BarCode result) {
+        this.pd.dismiss();
+        if(result != null)
+            rebindBarCode(result);
         else
         {
             Toast.makeText(this, "Update failed", Toast.LENGTH_LONG).show();
@@ -144,21 +148,28 @@ public class DetailsActivity extends RoboActivity
         Comment comment = new Comment();
         comment.Text = text;
         comment.BarCodeId = this.currentBarCode.Id;
-        
+        this.pd = ProgressDialog.show(this,"", "Sending your comment...");
         new PostCommentTask(this.service, this).execute(comment);
     }
 
     public void postCommentResult(Boolean result) {
+        this.pd.dismiss();
+        this.commentText.setText("");
         Log.d(this.settings.getTag(), "postCommentResult: " + result.toString());
     }
 
     public void ratingSuccess(BarCode result) {
+        this.pd.dismiss();
         if(result != null) {
             Log.d(this.settings.getTag(), "Rating is go");
-            this.currentBarCode = result;
-            this.bindCurrentBarCode();
+            rebindBarCode(result);
         }   else {
             Log.d(this.settings.getTag(), "Rating is NO go");
         }
+    }
+
+    private void rebindBarCode(BarCode result) {
+        this.currentBarCode = result;
+        this.bindCurrentBarCode();
     }
 }
