@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.R;
 import com.tacticalnuclearstrike.rateallthethings.Tasks.CreateUserTask;
@@ -19,7 +20,7 @@ import roboguice.inject.InjectView;
 public class AccountActivity extends RoboActivity {
     @InjectView(R.id.btnCreateAccount)
     Button btnCreateUsers;
-    
+
     @InjectView(R.id.email)
     EditText email;
 
@@ -40,26 +41,29 @@ public class AccountActivity extends RoboActivity {
     }
 
     private void SetupButtons() {
-        btnCreateUsers.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                  startCreateUser();
+        btnCreateUsers.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startCreateUser();
             }
         });
     }
 
-    private void startCreateUser(){
+    private void startCreateUser() {
         String email = this.email.getText().toString();
-        this.pd = ProgressDialog.show(this, "", "Creating Account...");
-
-        new CreateUserTask(this, service).execute(email);
+        if (email.length() > 3) {
+            this.pd = ProgressDialog.show(this, "", "Creating Account...");
+            new CreateUserTask(this, service).execute(email);
+        } else {
+            Toast.makeText(this, getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void savePassword(String password) {
         this.pd.dismiss();
-        if(password != null)      {
+        if (password != null) {
             settings.setEmail(this.email.getText().toString());
             settings.setPassword(password);
-        }else {
+        } else {
             // error management
         }
         this.finish();

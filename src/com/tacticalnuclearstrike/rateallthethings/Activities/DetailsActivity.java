@@ -128,9 +128,15 @@ public class DetailsActivity extends RoboActivity
     }
 
     private void callUpdateBarCode() {
+        String name = barcodeName.getText().toString();
+        if(name.length() > 0 && !name.equals(currentBarCode.Name)) {
         currentBarCode.Name = barcodeName.getText().toString();
+        
         this.pd = ProgressDialog.show(this,"", "Updating BarCode...");
         new UpdateBarCodeTask(this.service, this).execute(currentBarCode);
+        } else {
+            Toast.makeText(this, getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void success(BarCode result) {
@@ -145,11 +151,15 @@ public class DetailsActivity extends RoboActivity
     
     private void postComment(){
         String text = this.commentText.getText().toString();
+        if(text.length() > 5) {
         Comment comment = new Comment();
         comment.Text = text;
         comment.BarCodeId = this.currentBarCode.Id;
         this.pd = ProgressDialog.show(this,"", "Sending your comment...");
         new PostCommentTask(this.service, this).execute(comment);
+        } else{
+            Toast.makeText(this, getString(R.string.comment_too_short), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void postCommentResult(Boolean result) {

@@ -60,7 +60,7 @@ public class Service implements IService{
             Type barCodeArrayType = new TypeToken<ArrayList<BarCode>>(){}.getType();
             List<BarCode> items = new Gson().fromJson(reader, barCodeArrayType);
             return items.get(0);
-        } catch (IOException ioe) {
+        } catch (Exception ioe) {
             Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
         }
         return null;
