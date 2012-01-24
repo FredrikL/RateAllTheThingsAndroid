@@ -52,7 +52,8 @@ public class Service implements IService{
     
     public BarCode lookUpBarCode(String format, String code) {
         try {
-            String url = URL + "/BarCode/" + format + "/" + code;
+            String url = URL + "/BarCode/" + URLEncoder.encode(format, "utf-8") + "/" + URLEncoder.encode(code,"utf-8");
+            Log.d(this.settings.getTag(), url);
             HttpGet httpGet = this.getHttpGetWithBasicAuth(url);
 
             Reader reader = executeRequestAndReturnAsReader(httpGet);
