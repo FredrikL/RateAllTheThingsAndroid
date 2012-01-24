@@ -3,15 +3,15 @@
           package="com.tacticalnuclearstrike.rateallthethings">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:name=".RateAllTheThingsApplication">
-        <activity android:name=".StartActivity">
+        <activity android:name=".StartActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.DetailsActivity"/>
-        <activity android:name=".Activities.AccountActivity"/>
-        <activity android:name=".Activities.DisplayCommentsActivity"/>
+        <activity android:name=".Activities.DetailsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.AccountActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.DisplayCommentsActivity" android:screenOrientation="portrait"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
