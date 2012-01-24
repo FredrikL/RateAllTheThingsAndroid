@@ -27,6 +27,10 @@ public class Settings implements ISettings {
         return this.getSharedPreferences().getString("PASSWORD", "");
     }
 
+    public Boolean hasEmailAndPassword() {
+        return !this.getEmail().equals("") && !this.getPassword().equals("");
+    }
+
     public String getTag() {
         return TAG;
     }

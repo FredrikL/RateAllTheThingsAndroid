@@ -7,6 +7,8 @@ public interface ISettings {
     void setPassword(String password);
     String getPassword();
     
+    Boolean hasEmailAndPassword();
+    
     String getTag();
 }
 

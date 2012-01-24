@@ -1,6 +1,8 @@
 package com.tacticalnuclearstrike.rateallthethings;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,7 +33,7 @@ public class StartActivity extends RoboActivity {
 
     @Inject
     IService service;
-    
+
     @Inject
     ISettings settings;
 
@@ -41,6 +43,7 @@ public class StartActivity extends RoboActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.start_activity);
         this.SetupButtons();
+        this.startAccountActivityIfNeeded();
     }
 
     @Override
@@ -54,16 +57,28 @@ public class StartActivity extends RoboActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_account:
-                Intent i = new Intent(this, AccountActivity.class);
-                this.startActivity(i);
-
-                return true;
-            case R.id.menu_search:
+                startAccountActivity();
 
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startAccountActivityIfNeeded() {
+        if (!this.settings.hasEmailAndPassword()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getString(R.string.start_account_activity)).setCancelable(false).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    startAccountActivity();
+                }
+            });
+        }
+    }
+
+    private void startAccountActivity() {
+        Intent i = new Intent(this, AccountActivity.class);
+        this.startActivity(i);
     }
 
     private void SetupButtons() {
@@ -75,6 +90,8 @@ public class StartActivity extends RoboActivity {
     }
 
     private void StartScan() {
+        if(!this.settings.hasEmailAndPassword())
+            return;
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.initiateScan();
     }
@@ -89,21 +106,19 @@ public class StartActivity extends RoboActivity {
             Toast.makeText(this, "No barcode found", Toast.LENGTH_LONG).show();
         }
     }
-    
+
     private void getBarCodeDetails(BarCode barcode) {
         this.pd.dismiss();
-        if(barcode != null){
+        if (barcode != null) {
             Intent i = new Intent(this, DetailsActivity.class);
-            i.putExtra("BARCODE",barcode);
+            i.putExtra("BARCODE", barcode);
             this.startActivity(i);
-        }
-        else
-        {
+        } else {
             Toast.makeText(this, "Server problems", Toast.LENGTH_LONG).show();
         }
     }
-    
-    private class GetBarCodeDetailsTask extends AsyncTask<String, Void, BarCode>{
+
+    private class GetBarCodeDetailsTask extends AsyncTask<String, Void, BarCode> {
         @Override
         protected BarCode doInBackground(String... params) {
             return service.lookUpBarCode(params[0], params[1]);
