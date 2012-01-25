@@ -50,6 +50,7 @@ public class StartActivity extends RoboActivity {
     {
         super.onResume();
         this.startAccountActivityIfNeeded();
+        this.StartScan();
     }
 
     @Override
