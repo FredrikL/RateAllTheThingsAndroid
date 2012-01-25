@@ -43,6 +43,12 @@ public class StartActivity extends RoboActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.start_activity);
         this.SetupButtons();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
         this.startAccountActivityIfNeeded();
     }
 
@@ -73,6 +79,7 @@ public class StartActivity extends RoboActivity {
                     startAccountActivity();
                 }
             });
+            builder.show();
         }
     }
 
