@@ -15,5 +15,6 @@ public class BarCode implements Serializable{
     public boolean HasRated;
 
     public String Name;
+    public String Manufacturer;
 }
 

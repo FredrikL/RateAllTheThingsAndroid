@@ -28,22 +28,35 @@ import roboguice.inject.InjectView;
 
 public class DetailsActivity extends RoboActivity
         implements IUpdateBarCodeResult, IPostCommentResult, IRateBarCodeResult {
-    @InjectView(R.id.tvFormat) TextView format;
-    @InjectView(R.id.tvCode) TextView code;
-    @InjectView(R.id.barcodeName) EditText barcodeName;
-    @InjectView(R.id.commentText) EditText commentText;
-    @InjectView(R.id.tvRating) TextView rating;
-    
-    @InjectView(R.id.btnUpdateBarcode) Button btnUpdateBarcode;
-    @InjectView(R.id.btnPostComment) Button btnPostComment;
-    @InjectView(R.id.btnDisplayComments) Button btnDisplayComments;
-    @InjectView(R.id.btnRateBarCode) Button btnRateBarCode;
-    
-    @Inject IService service;
-    @Inject ISettings settings;
+    @InjectView(R.id.tvFormat)
+    TextView format;
+    @InjectView(R.id.tvCode)
+    TextView code;
+    @InjectView(R.id.barcodeName)
+    EditText barcodeName;
+    @InjectView(R.id.commentText)
+    EditText commentText;
+    @InjectView(R.id.tvRating)
+    TextView rating;
+    @InjectView(R.id.barcodeManufacturer)
+    EditText barcodeManufacturer;
+
+    @InjectView(R.id.btnUpdateBarcode)
+    Button btnUpdateBarcode;
+    @InjectView(R.id.btnPostComment)
+    Button btnPostComment;
+    @InjectView(R.id.btnDisplayComments)
+    Button btnDisplayComments;
+    @InjectView(R.id.btnRateBarCode)
+    Button btnRateBarCode;
+
+    @Inject
+    IService service;
+    @Inject
+    ISettings settings;
 
     private BarCode currentBarCode;
-    
+
     private AlertDialog ratingDialog;
     private ProgressDialog pd;
 
@@ -90,17 +103,17 @@ public class DetailsActivity extends RoboActivity
             }
         });
         this.ratingDialog = builder.create();
-        this.ratingDialog.show();        
+        this.ratingDialog.show();
     }
-    
-    public void postRating(String value){
+
+    public void postRating(String value) {
         this.ratingDialog.dismiss();
         int rating = Integer.parseInt(value);
         this.pd = ProgressDialog.show(this, "", "Sending your rating...");
         new RateBarCodeTask(this.service, this, this.currentBarCode.Id).execute(rating);
     }
-    
-    private void displayComments(){
+
+    private void displayComments() {
         Intent i = new Intent(this, DisplayCommentsActivity.class);
         i.putExtra("BarCodeId", this.currentBarCode.Id);
         this.startActivity(i);
@@ -121,19 +134,21 @@ public class DetailsActivity extends RoboActivity
         format.setText("Format: " + currentBarCode.Format);
         code.setText("Code: " + currentBarCode.Code);
         rating.setText("Rating: " + String.format("%.2g", this.currentBarCode.Rating));
-        if(currentBarCode.HasRated)
+        if (currentBarCode.HasRated)
             btnRateBarCode.setEnabled(false);
 
         barcodeName.setText(currentBarCode.Name);
+        barcodeManufacturer.setText(currentBarCode.Manufacturer);
     }
 
     private void callUpdateBarCode() {
         String name = barcodeName.getText().toString();
-        if(name.length() > 0 && !name.equals(currentBarCode.Name)) {
-        currentBarCode.Name = barcodeName.getText().toString();
-        
-        this.pd = ProgressDialog.show(this,"", "Updating BarCode...");
-        new UpdateBarCodeTask(this.service, this).execute(currentBarCode);
+        if (name.length() > 0 && !name.equals(currentBarCode.Name)) {
+            currentBarCode.Name = name;
+            currentBarCode.Manufacturer = barcodeManufacturer.getText().toString();
+
+            this.pd = ProgressDialog.show(this, "", "Updating BarCode...");
+            new UpdateBarCodeTask(this.service, this).execute(currentBarCode);
         } else {
             Toast.makeText(this, getString(R.string.name_too_short), Toast.LENGTH_SHORT).show();
         }
@@ -141,23 +156,22 @@ public class DetailsActivity extends RoboActivity
 
     public void success(BarCode result) {
         this.pd.dismiss();
-        if(result != null)
+        if (result != null)
             rebindBarCode(result);
-        else
-        {
+        else {
             Toast.makeText(this, "Update failed", Toast.LENGTH_LONG).show();
         }
     }
-    
-    private void postComment(){
+
+    private void postComment() {
         String text = this.commentText.getText().toString();
-        if(text.length() > 5) {
-        Comment comment = new Comment();
-        comment.Text = text;
-        comment.BarCodeId = this.currentBarCode.Id;
-        this.pd = ProgressDialog.show(this,"", "Sending your comment...");
-        new PostCommentTask(this.service, this).execute(comment);
-        } else{
+        if (text.length() > 5) {
+            Comment comment = new Comment();
+            comment.Text = text;
+            comment.BarCodeId = this.currentBarCode.Id;
+            this.pd = ProgressDialog.show(this, "", "Sending your comment...");
+            new PostCommentTask(this.service, this).execute(comment);
+        } else {
             Toast.makeText(this, getString(R.string.comment_too_short), Toast.LENGTH_SHORT).show();
         }
     }
@@ -170,10 +184,11 @@ public class DetailsActivity extends RoboActivity
 
     public void ratingSuccess(BarCode result) {
         this.pd.dismiss();
-        if(result != null) {
+        if (result != null) {
             Log.d(this.settings.getTag(), "Rating is go");
             rebindBarCode(result);
-        }   else {
+            this.btnRateBarCode.setEnabled(false);
+        } else {
             Log.d(this.settings.getTag(), "Rating is NO go");
         }
     }

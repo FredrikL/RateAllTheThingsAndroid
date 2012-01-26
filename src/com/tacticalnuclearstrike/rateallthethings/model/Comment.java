@@ -6,4 +6,5 @@ public class Comment {
     public long Author;
 
     public String Text;
+    public String Avatar;
 }

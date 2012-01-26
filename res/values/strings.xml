@@ -16,4 +16,5 @@
     <string name="name_too_short">Name too short</string>
     <string name="start_account_activity">You need to create an account.</string>
     <string name="ok">Ok</string>
+    <string name="manufacturer">Manufacturer</string>
 </resources>
