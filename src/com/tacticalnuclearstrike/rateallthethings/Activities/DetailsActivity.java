@@ -28,8 +28,6 @@ import roboguice.inject.InjectView;
 
 public class DetailsActivity extends ActionBarActivity
         implements IUpdateBarCodeResult, IPostCommentResult, IRateBarCodeResult {
-    @InjectView(R.id.tvFormat)
-    TextView format;
     @InjectView(R.id.tvCode)
     TextView code;
     @InjectView(R.id.barcodeName)
@@ -131,11 +129,12 @@ public class DetailsActivity extends ActionBarActivity
     }
 
     private void bindCurrentBarCode() {
-        format.setText("Format: " + currentBarCode.Format);
-        code.setText("Code: " + currentBarCode.Code);
+        code.setText(currentBarCode.Code + " (" + currentBarCode.Format + ")");
         rating.setText("Rating: " + String.format("%.2g", this.currentBarCode.Rating));
         if (currentBarCode.HasRated)
             btnRateBarCode.setEnabled(false);
+
+        setTitle(currentBarCode.Name);
 
         barcodeName.setText(currentBarCode.Name);
         barcodeManufacturer.setText(currentBarCode.Manufacturer);
