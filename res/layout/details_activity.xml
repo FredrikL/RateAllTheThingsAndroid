@@ -9,7 +9,7 @@
         <LinearLayout android:layout_width="fill_parent"
                       android:padding="4dp"
                       android:layout_height="wrap_content">
-            <TextView android:text="0123456789"
+            <TextView android:text=""
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:id="@+id/tvCode"/>
@@ -37,30 +37,32 @@
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:inputType="text"/>
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-                          android:gravity="right">
-                <Button android:id="@+id/btnUpdateBarcode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/update_barcode"
-                        android:padding="16dp"/>
-            </LinearLayout>
         </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:gravity="right">
+            <Button android:id="@+id/btnUpdateBarcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_barcode"
+                    android:padding="16dp"/>
+        </LinearLayout>
+
         <View android:layout_height="2dp"
               android:layout_width="fill_parent"
               android:background="@color/divider_color"/>
 
         <LinearLayout android:layout_width="fill_parent"
-                      android:padding="4dp"
-                      android:layout_height="wrap_content"
-                >
+                      android:layout_height="wrap_content">
             <TextView android:text="@string/rating"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:textSize="18dp"
+                      android:padding="4dp"
+                      android:textSize="20dp"
+                      android:layout_marginTop="12dp"
                       android:id="@+id/tvRating"/>
+
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:gravity="right">
@@ -76,24 +78,42 @@
               android:layout_width="fill_parent"
               android:background="@color/divider_color"/>
 
-        <TextView android:text="@string/comment"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"/>
-        <EditText android:id="@+id/commentText"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:inputType="text"/>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="4dp"
+                      android:orientation="vertical">
+            <TextView android:text="@string/comment"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"/>
+            <EditText android:id="@+id/commentText"
+                      android:layout_width="fill_parent"
+                      android:lines="3"
+                      android:minLines="2"
+                      android:layout_height="wrap_content"
+                      android:inputType="text"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="4dp"
+                      android:gravity="right">
+            <Button android:id="@+id/btnPostComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/post_comment"/>
+        </LinearLayout>
 
-        <Button android:id="@+id/btnPostComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/post_comment"/>
-
-
-        <Button android:id="@+id/btnDisplayComments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/display_comment"/>
-
+        <View android:layout_height="2dp"
+              android:layout_width="fill_parent"
+              android:background="@color/divider_color"/>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:gravity="center"
+                      android:layout_marginTop="12dp">
+            <Button android:id="@+id/btnDisplayComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/display_comment" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
