@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.example.android.actionbarcompat.ActionBarListActivity;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IGetCommentsForBarCodeResult;
 import com.tacticalnuclearstrike.rateallthethings.R;
@@ -20,7 +21,6 @@ import com.tacticalnuclearstrike.rateallthethings.Tasks.GetCommentsForBarCodeTas
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.Comment;
-import roboguice.activity.RoboListActivity;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * User: Fredrik / 2012-01-22
  */
-public class DisplayCommentsActivity extends RoboListActivity implements IGetCommentsForBarCodeResult {
+public class DisplayCommentsActivity extends ActionBarListActivity implements IGetCommentsForBarCodeResult {
     
     @Inject
     IService service;

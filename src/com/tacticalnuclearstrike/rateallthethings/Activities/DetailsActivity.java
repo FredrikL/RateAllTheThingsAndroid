@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IPostCommentResult;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IRateBarCodeResult;
@@ -23,10 +24,9 @@ import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 import com.tacticalnuclearstrike.rateallthethings.model.Comment;
-import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
-public class DetailsActivity extends RoboActivity
+public class DetailsActivity extends ActionBarActivity
         implements IUpdateBarCodeResult, IPostCommentResult, IRateBarCodeResult {
     @InjectView(R.id.tvFormat)
     TextView format;

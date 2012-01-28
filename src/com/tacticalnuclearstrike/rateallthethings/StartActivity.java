@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -21,13 +22,12 @@ import com.tacticalnuclearstrike.rateallthethings.Activities.DetailsActivity;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
-import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
 /**
  * User: Fredrik / 2011-12-19
  */
-public class StartActivity extends RoboActivity {
+public class StartActivity extends ActionBarActivity {
     @InjectView(R.id.btnScan)
     Button btnScan;
 
@@ -56,7 +56,7 @@ public class StartActivity extends RoboActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

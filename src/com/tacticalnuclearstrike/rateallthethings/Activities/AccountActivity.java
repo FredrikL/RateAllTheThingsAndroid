@@ -6,18 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.R;
 import com.tacticalnuclearstrike.rateallthethings.Tasks.CreateUserTask;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
-import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 
 /**
  * User: Fredrik / 2012-01-15
  */
-public class AccountActivity extends RoboActivity {
+public class AccountActivity extends ActionBarActivity {
     @InjectView(R.id.btnCreateAccount)
     Button btnCreateUsers;
 
