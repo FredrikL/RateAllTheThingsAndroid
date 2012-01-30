@@ -17,7 +17,7 @@ import roboguice.inject.InjectView;
 /**
  * User: Fredrik / 2012-01-15
  */
-public class AccountActivity extends ActionBarActivity {
+public class CreateAccountActivity extends ActionBarActivity {
     @InjectView(R.id.btnCreateAccount)
     Button btnCreateUsers;
 

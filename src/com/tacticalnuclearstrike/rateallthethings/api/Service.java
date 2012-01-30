@@ -181,6 +181,25 @@ public class Service implements IService{
         }
     }
 
+    public Boolean testCredentials(String username, String password) {
+        try {
+            String url = URL + "/BarCode/1";
+
+            HttpGet httpGet = new HttpGet(url);
+            String s = username + ":" + password;
+            httpGet.addHeader("Authorization", "Basic " + Base64.encodeToString(s.getBytes(), Base64.NO_WRAP));
+
+            Reader reader = executeRequestAndReturnAsReader(httpGet);
+
+            Type barCodeArrayType = new TypeToken<ArrayList<BarCode>>(){}.getType();
+            List<BarCode> items = new Gson().fromJson(reader, barCodeArrayType);
+            return true;
+        } catch (Exception ioe) {
+            Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
+        }
+        return false;
+    }
+
     private class CreateUserResponse {
         public String password;
     }

@@ -17,8 +17,9 @@ import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.tacticalnuclearstrike.rateallthethings.Activities.AccountActivity;
+import com.tacticalnuclearstrike.rateallthethings.Activities.CreateAccountActivity;
 import com.tacticalnuclearstrike.rateallthethings.Activities.DetailsActivity;
+import com.tacticalnuclearstrike.rateallthethings.Activities.LoginActivity;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
@@ -66,9 +67,18 @@ public class StartActivity extends ActionBarActivity {
                 startAccountActivity();
 
                 return true;
+            case R.id.menu_login:
+                startLoginActivity();
+                
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startLoginActivity() {
+        Intent i = new Intent(this, LoginActivity.class);
+        this.startActivity(i);
     }
 
     private void startAccountActivityIfNeeded() {
@@ -84,7 +94,7 @@ public class StartActivity extends ActionBarActivity {
     }
 
     private void startAccountActivity() {
-        Intent i = new Intent(this, AccountActivity.class);
+        Intent i = new Intent(this, CreateAccountActivity.class);
         this.startActivity(i);
     }
 

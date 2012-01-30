@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface IService {
     BarCode lookUpBarCode(String format, String code);
+    
     String createUser(String email);
     BarCode updateBarCode(BarCode barCode);
     
@@ -17,5 +18,7 @@ public interface IService {
     List<Comment> getCommentsForBarCode(long barCodeId);
 
     BarCode rateBarCode(long barCodeId, int rating);
+    
+    Boolean testCredentials(String username, String password);
 }
 

@@ -143,8 +143,8 @@ public class DetailsActivity extends ActionBarActivity
     private void callUpdateBarCode() {
         String name = barcodeName.getText().toString();
         if (name.length() > 0 && !name.equals(currentBarCode.Name)) {
-            currentBarCode.Name = name;
-            currentBarCode.Manufacturer = barcodeManufacturer.getText().toString();
+            currentBarCode.Name = name.trim();
+            currentBarCode.Manufacturer = barcodeManufacturer.getText().toString().trim();
 
             this.pd = ProgressDialog.show(this, "", "Updating BarCode...");
             new UpdateBarCodeTask(this.service, this).execute(currentBarCode);
@@ -166,7 +166,7 @@ public class DetailsActivity extends ActionBarActivity
         String text = this.commentText.getText().toString();
         if (text.length() > 5) {
             Comment comment = new Comment();
-            comment.Text = text;
+            comment.Text = text.trim();
             comment.BarCodeId = this.currentBarCode.Id;
             this.pd = ProgressDialog.show(this, "", "Sending your comment...");
             new PostCommentTask(this.service, this).execute(comment);
