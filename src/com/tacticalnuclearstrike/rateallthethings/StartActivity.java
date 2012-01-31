@@ -84,9 +84,16 @@ public class StartActivity extends ActionBarActivity {
     private void startAccountActivityIfNeeded() {
         if (!this.settings.hasEmailAndPassword()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(R.string.start_account_activity)).setCancelable(false).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            builder.setMessage(getString(R.string.start_account_activity)).setCancelable(false);
+            builder.setPositiveButton(R.string.create_account, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     startAccountActivity();
+                }
+            });
+            builder.setNegativeButton(R.string.sign_in, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startLoginActivity();
                 }
             });
             builder.show();
