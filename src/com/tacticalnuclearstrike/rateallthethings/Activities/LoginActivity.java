@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.ITestCredentialsTaskCallBack;
@@ -29,39 +30,45 @@ public class LoginActivity extends ActionBarActivity implements ITestCredentials
 
     @InjectView(R.id.btnSignIn)
     Button btnSignIn;
-    
+
     @Inject
     IService service;
     @Inject
     ISettings settings;
-    
+
     private ProgressDialog pd;
-    
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         this.setContentView(R.layout.login_activity);
-        
+
+        this.loginEmail.setText(this.settings.getEmail());
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
             }
-        });        
+        });
     }
 
     private void signIn() {
         String username = this.loginEmail.getText().toString().trim();
         String password = this.loginPassword.getText().toString().trim();
-        this.pd = ProgressDialog.show(this, "","Signing in...");
+        this.pd = ProgressDialog.show(this, "", "Signing in...");
         new TestCredentialsTask(this.service, this).execute(username, password);
     }
 
     @Override
     public void testCredentialsResult(Boolean result) {
         this.pd.dismiss();
-        this.settings.setEmail(this.loginEmail.getText().toString().trim());
-        this.settings.setPassword(this.loginPassword.getText().toString().trim());
+        if (result) {
+            this.settings.setEmail(this.loginEmail.getText().toString().trim());
+            this.settings.setPassword(this.loginPassword.getText().toString().trim());
+            this.finish();
+        } else {
+            Toast.makeText(this, "Sign in failed!", Toast.LENGTH_LONG).show();
+        }
     }
-
 }
