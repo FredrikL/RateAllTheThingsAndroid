@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
+import com.google.inject.internal.ToStringBuilder;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IPostCommentResult;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IRateBarCodeResult;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.IUpdateBarCodeResult;
@@ -142,7 +143,7 @@ public class DetailsActivity extends ActionBarActivity
 
     private void callUpdateBarCode() {
         String name = barcodeName.getText().toString();
-        if (name.length() > 0 && !name.equals(currentBarCode.Name)) {
+        if (name.length() > 1) {
             currentBarCode.Name = name.trim();
             currentBarCode.Manufacturer = barcodeManufacturer.getText().toString().trim();
 
@@ -171,14 +172,18 @@ public class DetailsActivity extends ActionBarActivity
             this.pd = ProgressDialog.show(this, "", "Sending your comment...");
             new PostCommentTask(this.service, this).execute(comment);
         } else {
-            Toast.makeText(this, getString(R.string.comment_too_short), Toast.LENGTH_SHORT).show();
+            this.toastLong(R.string.comment_too_short);
         }
     }
 
     public void postCommentResult(Boolean result) {
         this.pd.dismiss();
+        if(result) {
         this.commentText.setText("");
         Log.d(this.settings.getTag(), "postCommentResult: " + result.toString());
+        }else {
+            this.toastLong(R.string.post_comment_failed);
+        }
     }
 
     public void ratingSuccess(BarCode result) {
@@ -189,7 +194,13 @@ public class DetailsActivity extends ActionBarActivity
             this.btnRateBarCode.setEnabled(false);
         } else {
             Log.d(this.settings.getTag(), "Rating is NO go");
+            this.toastLong(R.string.rating_failed);
         }
+    }
+    
+    
+    public void toastLong(int id) {
+        Toast.makeText(this, getString(id), Toast.LENGTH_LONG).show();
     }
 
     private void rebindBarCode(BarCode result) {

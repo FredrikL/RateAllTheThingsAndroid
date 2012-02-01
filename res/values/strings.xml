@@ -17,13 +17,13 @@
     <string name="start_account_activity">You need to Sign in to your account or Create a new account.</string>
     <string name="ok">Ok</string>
     <string name="manufacturer">Manufacturer</string>
-
     <string name="alternate_title">An alternate title that is long</string>
     <string name="toggle_title">Toggle title</string>
-
     <string name="menu_refresh">Refresh</string>
     <string name="menu_share">Share</string>
     <string name="scan">Scan</string>
     <string name="enter_password">Enter password</string>
     <string name="sign_in">Sign in</string>
+    <string name="post_comment_failed">Unable to send comment</string>
+    <string name="rating_failed">Unable to rate BarCode</string>
 </resources>
