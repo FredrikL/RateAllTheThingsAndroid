@@ -16,6 +16,8 @@ public class TestCredentialsTask extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... strings) {
+        if(strings[0].isEmpty() || strings[1].isEmpty())
+            return false;
         return this.service.testCredentials(strings[0], strings[1]);
     }
 

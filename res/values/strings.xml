@@ -26,4 +26,5 @@
     <string name="sign_in">Sign in</string>
     <string name="post_comment_failed">Unable to send comment</string>
     <string name="rating_failed">Unable to rate BarCode</string>
+    <string name="unable_to_auth">Username or password wrong or Unable to connecto to server</string>
 </resources>

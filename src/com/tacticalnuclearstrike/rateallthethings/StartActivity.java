@@ -19,7 +19,9 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.tacticalnuclearstrike.rateallthethings.Activities.CreateAccountActivity;
 import com.tacticalnuclearstrike.rateallthethings.Activities.DetailsActivity;
+import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.ITestCredentialsTaskCallBack;
 import com.tacticalnuclearstrike.rateallthethings.Activities.LoginActivity;
+import com.tacticalnuclearstrike.rateallthethings.Tasks.TestCredentialsTask;
 import com.tacticalnuclearstrike.rateallthethings.api.IService;
 import com.tacticalnuclearstrike.rateallthethings.api.ISettings;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
@@ -28,7 +30,7 @@ import roboguice.inject.InjectView;
 /**
  * User: Fredrik / 2011-12-19
  */
-public class StartActivity extends ActionBarActivity {
+public class StartActivity extends ActionBarActivity implements ITestCredentialsTaskCallBack {
     @InjectView(R.id.btnScan)
     Button btnScan;
 
@@ -44,6 +46,9 @@ public class StartActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.start_activity);
         this.SetupButtons();
+
+        // TODO: check for network status
+        new TestCredentialsTask(this.service, this).execute(this.settings.getEmail(), this.settings.getPassword());
     }
 
     @Override
@@ -140,6 +145,11 @@ public class StartActivity extends ActionBarActivity {
         } else {
             Toast.makeText(this, "Server problems", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void testCredentialsResult(Boolean result) {
+        Toast.makeText(this, getString(R.string.unable_to_auth), Toast.LENGTH_LONG).show();
     }
 
     private class GetBarCodeDetailsTask extends AsyncTask<String, Void, BarCode> {
