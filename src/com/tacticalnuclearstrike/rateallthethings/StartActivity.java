@@ -48,6 +48,14 @@ public class StartActivity extends ActionBarActivity implements ITestCredentials
         this.SetupButtons();
 
         // TODO: check for network status
+        testCredentials();
+    }
+
+    private void testCredentials() {
+        String email = this.settings.getEmail(), password = this.settings.getPassword();
+        if(email.isEmpty() || password.isEmpty())
+            return;
+
         new TestCredentialsTask(this.service, this).execute(this.settings.getEmail(), this.settings.getPassword());
     }
 
