@@ -47,8 +47,8 @@ public class StartActivity extends ActionBarActivity implements ITestCredentials
         this.setContentView(R.layout.start_activity);
         this.SetupButtons();
 
-        // TODO: check for network status
-        testCredentials();
+        // TODO: borken
+        //testCredentials();
     }
 
     private void testCredentials() {

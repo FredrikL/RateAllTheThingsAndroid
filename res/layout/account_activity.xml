@@ -6,6 +6,13 @@
               android:orientation="vertical">
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:text="@string/email_usage"
+              android:textSize="16sp"
+              android:layout_marginTop="16dp"
+              android:layout_marginBottom="20dp"
+              android:layout_marginLeft="4dp"/>
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
               android:text="@string/enter_email"
               android:textSize="18sp"
               android:layout_marginTop="16dp"
@@ -14,10 +21,13 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="textEmailAddress"
-              android:layout_marginBottom="16dp" />
-
-    <Button android:id="@+id/btnCreateAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/create_account"/>
+              android:layout_marginBottom="16dp"/>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="right">
+        <Button android:id="@+id/btnCreateAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_account"/>
+    </LinearLayout>
 </LinearLayout>
