@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Service implements IService{
-    final String URL = "http://rateallthethings.com";
+    final String URL = "http://rateallthethings.apphb.com"; // fallback url
     private ISettings settings;
 
     @Inject
