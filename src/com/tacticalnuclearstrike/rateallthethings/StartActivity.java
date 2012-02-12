@@ -17,6 +17,7 @@ import com.example.android.actionbarcompat.ActionBarActivity;
 import com.google.inject.Inject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.tacticalnuclearstrike.rateallthethings.Activities.AccountActivity;
 import com.tacticalnuclearstrike.rateallthethings.Activities.CreateAccountActivity;
 import com.tacticalnuclearstrike.rateallthethings.Activities.DetailsActivity;
 import com.tacticalnuclearstrike.rateallthethings.Activities.Interfaces.ITestCredentialsTaskCallBack;
@@ -77,16 +78,25 @@ public class StartActivity extends ActionBarActivity implements ITestCredentials
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_account:
-                startAccountActivity();
-
+                startEditAccountActivity();
                 return true;
+
+            case R.id.menu_create_account:
+                startCreateAccountActivity();
+                return true;
+
             case R.id.menu_login:
                 startLoginActivity();
-                
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    
+    private void startEditAccountActivity(){
+        Intent i = new Intent(this, AccountActivity.class);
+        this.startActivity(i);
     }
 
     private void startLoginActivity() {
@@ -100,7 +110,7 @@ public class StartActivity extends ActionBarActivity implements ITestCredentials
             builder.setMessage(getString(R.string.start_account_activity)).setCancelable(false);
             builder.setPositiveButton(R.string.create_account, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    startAccountActivity();
+                    startCreateAccountActivity();
                 }
             });
             builder.setNegativeButton(R.string.sign_in, new DialogInterface.OnClickListener() {
@@ -113,7 +123,7 @@ public class StartActivity extends ActionBarActivity implements ITestCredentials
         }
     }
 
-    private void startAccountActivity() {
+    private void startCreateAccountActivity() {
         Intent i = new Intent(this, CreateAccountActivity.class);
         this.startActivity(i);
     }

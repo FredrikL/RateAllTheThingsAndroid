@@ -20,7 +20,7 @@
     <EditText android:id="@+id/alias"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:inputType="textAutoComplete|textPersonName"
+              android:inputType="textAutoComplete"
               android:layout_marginBottom="16dp"/>
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"

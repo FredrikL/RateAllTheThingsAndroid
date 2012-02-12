@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Rate All The Things</string>
     <string name="menu_search">Search</string>
-    <string name="menu_account">Account</string>
+    <string name="menu_account">Edit account</string>
     <string name="create_account">Create Account</string>
     <string name="email">E-Mail</string>
     <string name="name">Name</string>
@@ -32,4 +32,6 @@
     <string name="account_name">Update your account details.</string>
     <string name="enter_alias">What do you call yourself?</string>
     <string name="update_account">Update account</string>
+    <string name="updating_account">Updating account...</string>
+    <string name="update_account_error">Error during updating, try again.</string>
 </resources>

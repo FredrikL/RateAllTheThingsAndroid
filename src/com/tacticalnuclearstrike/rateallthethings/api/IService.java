@@ -23,5 +23,6 @@ public interface IService {
     Boolean testCredentials(String username, String password);
 
     User getCurrentUser();
+    Boolean updateUser(User user);
 }
 

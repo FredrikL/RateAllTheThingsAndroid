@@ -203,7 +203,45 @@ public class Service implements IService{
 
     @Override
     public User getCurrentUser() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        try{
+            String url = URL + "/Account/";
+            Log.d(this.settings.getTag(), url);
+            HttpGet post = this.getHttpGetWithBasicAuth(url);
+
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse resp = client.execute(post);
+
+            Log.d(this.settings.getTag(), "Response is " + resp.getStatusLine().getStatusCode());
+
+            Type type = new TypeToken<User>(){}.getType();
+            InputStream content = resp.getEntity().getContent();
+            InputStreamReader reader= new InputStreamReader(content);
+            return new Gson().fromJson(reader, type);
+        } catch (Exception e) {
+            Log.e(this.settings.getTag(), e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean updateUser(User user) {
+        try{
+            String url = URL + "/Account";
+            HttpPost post = this.getHttpPostWithBasicAuth(url);
+
+            String content = new Gson().toJson(user);
+
+            post.setEntity(new StringEntity(content, "UTF8"));
+            post.setHeader("Content-type", "application/json");
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse resp = client.execute(post);
+
+            Log.d(this.settings.getTag(), "Response is " + resp.getStatusLine().getStatusCode());
+        } catch (Exception e) {
+            Log.e(this.settings.getTag(), e.getMessage(), e);
+            return false;
+        }
+        return true;
     }
 
     private class CreateUserResponse {
