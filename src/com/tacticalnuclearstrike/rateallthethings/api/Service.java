@@ -3,11 +3,13 @@ package com.tacticalnuclearstrike.rateallthethings.api;
 import android.util.Base64;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 import com.tacticalnuclearstrike.rateallthethings.model.Comment;
 import com.tacticalnuclearstrike.rateallthethings.model.User;
+import com.tacticalnuclearstrike.rateallthethings.utils.DateDeserializer;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -23,10 +25,11 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Service implements IService{
-    final String URL = "http://rateallthethings.apphb.com"; // fallback url
+    final String URL = "https://rateallthethings.apphb.com"; // fallback url
     private ISettings settings;
 
     @Inject
@@ -142,6 +145,14 @@ public class Service implements IService{
         }
         return true;
     }
+    
+    private Gson getGson() {
+        GsonBuilder gsonb = new GsonBuilder();
+        DateDeserializer ds = new DateDeserializer();
+        gsonb.registerTypeAdapter(Date.class, ds);
+        Gson gson = gsonb.create();
+        return gson;
+    }
 
     public List<Comment> getCommentsForBarCode(long barCodeId) {
         List<Comment> retVal;
@@ -152,7 +163,7 @@ public class Service implements IService{
             Reader reader = executeRequestAndReturnAsReader(httpGet);
 
             Type type = new TypeToken<ArrayList<Comment>>(){}.getType();
-            retVal = new Gson().fromJson(reader, type);
+            retVal = getGson().fromJson(reader, type);
         } catch(Exception e) {
             Log.e(this.settings.getTag(), e.getMessage(), e);
             return new ArrayList<Comment>();

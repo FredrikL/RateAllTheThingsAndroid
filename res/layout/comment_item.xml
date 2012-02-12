@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="?android:attr/listPreferredItemHeight"
               android:padding="6dip">
 
-    <ImageView
+    <!--<ImageView
             android:id="@+id/comment_avatar"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -23,5 +23,55 @@
                   android:textSize="16sp"
                   android:id="@+id/comment_text">
         </TextView>
-    </LinearLayout>
-</LinearLayout>
+        <TextView  xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:layout_width="fill_parent"
+                   android:layout_height="0dip"
+                   android:layout_weight="1"
+
+                   android:singleLine="true"
+                   android:ellipsize="marquee"
+                   android:id="@+id/coment_author_date"
+                />
+    </LinearLayout>-->
+
+
+    <ImageView
+            android:id="@+id/comment_avatar"
+
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="6dip"
+ android:src="@drawable/icon"/>
+
+
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_toRightOf="@id/comment_avatar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+
+            android:layout_alignWithParentIfMissing="true"
+            android:id="@+id/comment_text"
+            android:gravity="center_vertical"
+            android:text="comment" />
+
+    <TextView
+            android:id="@+id/coment_author_date"
+            android:layout_below="@id/comment_text"
+            android:layout_width="fill_parent"
+            android:layout_height="26dip"
+
+            android:layout_toRightOf="@id/comment_avatar"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:text="author" />
+</RelativeLayout>
