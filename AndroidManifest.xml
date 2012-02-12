@@ -13,6 +13,7 @@
         <activity android:name=".Activities.CreateAccountActivity" android:screenOrientation="portrait"/>
         <activity android:name=".Activities.DisplayCommentsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".Activities.LoginActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".Activities.AccountActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

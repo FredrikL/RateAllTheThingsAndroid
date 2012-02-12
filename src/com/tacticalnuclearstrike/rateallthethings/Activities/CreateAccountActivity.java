@@ -36,7 +36,7 @@ public class CreateAccountActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.setContentView(R.layout.account_activity);
+        this.setContentView(R.layout.create_account_activity);
         this.SetupButtons();
     }
 

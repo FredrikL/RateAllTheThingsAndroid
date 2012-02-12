@@ -28,4 +28,8 @@
     <string name="rating_failed">Unable to rate BarCode</string>
     <string name="unable_to_auth">Username or password wrong or Unable to connecto to server</string>
     <string name="email_usage">Your e-mail will be used to identify your account and to get your avatar from the Gravatar service.\nIt will not be shared with any third party.</string>
+    <string name="account_details">Getting account details.</string>
+    <string name="account_name">Update your account details.</string>
+    <string name="enter_alias">What do you call yourself?</string>
+    <string name="update_account">Update account</string>
 </resources>

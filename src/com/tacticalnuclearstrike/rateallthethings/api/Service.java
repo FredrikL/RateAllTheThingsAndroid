@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.tacticalnuclearstrike.rateallthethings.model.BarCode;
 import com.tacticalnuclearstrike.rateallthethings.model.Comment;
+import com.tacticalnuclearstrike.rateallthethings.model.User;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -198,6 +199,11 @@ public class Service implements IService{
             Log.e(this.settings.getTag(), ioe.getMessage(), ioe);
         }
         return false;
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     private class CreateUserResponse {
